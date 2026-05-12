@@ -286,85 +286,142 @@ body {
 .mf { padding:0 18px 18px; display:flex; justify-content:flex-end; gap:8px; }
 @keyframes su { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-/* ── MOBILE RESPONSIVE ── */
+/* ── DESENVOLVIMENTO ── */
+.dev-rep-row {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 12px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  display: flex; align-items: center; gap: 10px;
+}
+.dev-rep-row:hover { border-color: var(--yellow); background: rgba(255,230,0,0.04); }
+.dev-rep-row.active { border-color: var(--yellow); background: rgba(255,230,0,0.08); }
+.dev-rep-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.dev-rep-name { flex:1; font-size:12px; font-weight:700; color:var(--text); }
+.dev-rep-prod { font-size:12px; font-weight:900; }
+
+.dev-tip {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px; margin-bottom: 10px;
+}
+.dev-tip-head {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--yellow); margin-bottom: 8px;
+}
+.dev-tip-icon { font-size: 18px; }
+.dev-tip-body { font-size: 12px; color: var(--text); line-height: 1.7; }
+.dev-tip-body li { margin-bottom: 4px; padding-left: 4px; }
+.dev-tip-body ul { padding-left: 16px; }
+
+.dev-metric-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.dev-metric-lbl { font-size:10px; font-weight:700; color:var(--muted); flex:1; text-transform:uppercase; letter-spacing:0.06em; }
+.dev-metric-val { font-size:14px; font-weight:900; min-width:40px; text-align:right; }
+
+/* ══════════════════════════════════════
+   MOBILE  ≤ 640px
+══════════════════════════════════════ */
 @media (max-width: 640px) {
 
-  /* ── Topbar ── */
-  .topbar { padding: 0 0.75rem; height: 48px; }
-  .topbar-logo-wrap img { height: 28px; }
-  .topbar-divider { margin: 0 8px; }
-  .topbar-divider + div { font-size: 11px; }
-  .topbar-pill { font-size: 9px; padding: 4px 9px; }
+  /* Topbar */
+  .topbar { padding: 0 0.65rem; height: 46px; }
+  .topbar-logo-wrap img { height: 26px; }
+  .topbar-divider { margin: 0 7px; height: 22px; }
+  .topbar-divider + div { font-size: 10px; }
+  .topbar-right { gap: 5px; }
+  .topbar-pill { font-size: 9px; padding: 3px 8px; }
 
-  /* ── Hero ── */
-  .hero { padding: 0.75rem; }
+  /* Hero */
+  .hero { padding: 0.65rem 0.75rem; }
   .hero-label { font-size: 9px; }
-  .hero-title { font-size: 16px; }
+  .hero-title { font-size: 15px; }
   .hero-meta  { font-size: 10px; }
 
-  /* ── Nav tabs ── */
-  .tab-btn { padding: 9px 13px; font-size: 9px; }
-  .tab-btn .ti { font-size: 15px; }
+  /* Nav */
+  .tab-btn { padding: 8px 11px; font-size: 8px; }
+  .tab-btn .ti { font-size: 14px; }
 
-  /* ── Content ── */
-  .content { padding: 0.65rem; }
+  /* Content */
+  .content { padding: 0.6rem; }
 
-  /* ── KPI row ── */
-  .kpi-row { grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 0.75rem; }
-  .kv { font-size: 20px; }
+  /* KPI row */
+  .kpi-row { grid-template-columns: repeat(3,1fr); gap: 5px; margin-bottom: 0.65rem; }
+  .kv { font-size: 18px; }
   .kl { font-size: 8px; }
 
-  /* ── Winner bar ── */
-  .winner-bar { padding: 10px 12px; gap: 8px; }
-  .winner-bar .wt { font-size: 11px; }
-  .winner-bar .ws { font-size: 10px; }
+  /* Winner */
+  .winner-bar { padding: 9px 11px; gap: 7px; }
+  .winner-bar .wt { font-size: 10px; }
+  .winner-bar .ws { font-size: 9px; }
 
-  /* ── Placar cards ── */
+  /* Placar */
   .placar-grid { gap: 8px; }
-  .pn { font-size: 14px; }
-  .pb-badge { font-size: 9px; padding: 2px 7px; }
+  .pn { font-size: 13px; }
+  .pb-badge { font-size: 8px; padding: 2px 7px; }
   .plbl { font-size: 9px; }
   .pval { font-size: 12px; }
+  .pb { padding: 10px 12px; }
+  .prow { gap: 6px; margin-bottom: 6px; }
 
-  /* ── Rep cards (Equipes) ── */
+  /* Rep cards */
   .rep-cards { grid-template-columns: 1fr; gap: 8px; }
-  .rep-card { padding: 10px 12px; }
+  .rep-card { padding: 10px 11px; }
   .rep-card-name { font-size: 11px; }
-  .rep-card-prod { font-size: 18px; }
-  .rep-evo { height: 28px; }
+  .rep-card-prod { font-size: 17px; }
+  .rep-card-meta { font-size: 9px; }
+  .rep-evo { height: 26px; gap: 2px; }
 
-  /* ── Tabela Evolução (daily) ── */
-  .tbl-wrap { border-radius: 10px; }
-  .dt th { font-size: 9px; padding: 8px 8px; }
-  .dt td { padding: 8px 8px; font-size: 11px; }
-  /* Esconde coluna Equipe na tabela daily */
+  /* Daily table */
+  .tbl-wrap { border-radius: 10px; overflow-x: auto; }
+  .dt th { font-size: 9px; padding: 7px 6px; }
+  .dt td { padding: 7px 6px; font-size: 11px; }
+  .dt thead tr th:nth-child(3),
   #dailyBody tr td:nth-child(3) { display: none; }
-  #dailyBody tr th:nth-child(3) { display: none; }
-  .dt thead tr th:nth-child(3) { display: none; }
 
-  /* ── Lost cards ── */
-  .lh-n { font-size: 12px; }
+  /* Lost */
+  .lh-n { font-size: 11px; }
   .ln { font-size: 10px; }
   .lv { font-size: 12px; }
+  .lg { font-size: 9px; }
 
-  /* ── Sec label ── */
-  .sec-lbl { margin: 0.75rem 0 0.4rem; font-size: 9px; }
+  /* Labels */
+  .sec-lbl { margin: 0.65rem 0 0.35rem; font-size: 9px; }
+  .shr { flex-wrap: wrap; gap: 6px; }
   .shr-title { font-size: 12px; }
 
-  /* ── Filtros ── */
+  /* Filters */
   .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; gap: 5px; }
   .filter-row::-webkit-scrollbar { display: none; }
-  .fb { flex-shrink: 0; font-size: 9px; padding: 4px 10px; }
+  .fb { flex-shrink: 0; font-size: 9px; padding: 4px 9px; }
 
-  /* ── Search ── */
+  /* Inputs */
   .srch { font-size: 12px; padding: 7px 10px; }
 
-  /* ── Chart ── */
+  /* Charts */
   .chart-card { padding: 10px; }
   .chart-ttl { font-size: 10px; }
-  .legend { gap: 8px; }
-  .li { font-size: 10px; }
+  .legend { gap: 7px; }
+  .li { font-size: 9px; }
   .ld { width: 7px; height: 7px; }
+
+  /* Desenvolvimento — stack */
+  #devLayout { grid-template-columns: 1fr !important; }
+  #devRepList { max-height: 170px; }
+  .dev-rep-row { padding: 8px 10px; }
+  .dev-rep-name { font-size: 10px; }
+  .dev-rep-prod { font-size: 12px; }
+  .dev-tip { padding: 10px; }
+  .dev-tip-head { font-size: 10px; }
+  .dev-tip-body { font-size: 11px; }
+  .dev-metric-row { gap: 6px; margin-bottom: 6px; }
+  .dev-metric-lbl { font-size: 9px; }
+  .dev-metric-val { font-size: 13px; }
+
+  /* Multiplicador — tabela compacta */
+  #multTeamContent { overflow-x: auto; }
+  #multTeamContent table { min-width: 320px; }
+  #multTeamContent th,
+  #multTeamContent td { padding: 6px 5px !important; font-size: 11px !important; }
 }
 
 </style>
@@ -388,7 +445,7 @@ body {
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-label">🏁 Competição · 10/05 – 24/05/2026</div>
+  <div class="hero-label">🏁 Competição · 12/05 – 25/05/2026</div>
   <div class="hero-title">Sprint de Evolução</div>
   <div class="hero-meta" id="heroMeta">Critério: mais colaboradores que atingiram a meta</div>
 </div>
@@ -400,7 +457,8 @@ body {
     <button class="tab-btn" onclick="switchTab('equipes',this)"><span class="ti">👥</span>Equipes</button>
     <button class="tab-btn" onclick="switchTab('diario',this)"><span class="ti">📈</span>Evolução</button>
     <button class="tab-btn" onclick="switchTab('lost',this)"><span class="ti">⚠️</span>Atenção</button>
-
+    <button class="tab-btn" onclick="switchTab('dev',this)"><span class="ti">🚀</span>Desenvolvimento</button>
+    <button class="tab-btn" onclick="switchTab('mult',this)"><span class="ti">📋</span>Multiplicador</button>
   </div>
 </div>
 
@@ -432,7 +490,38 @@ body {
     <div class="rep-cards" id="repCards"></div>
   </div>
 
-  <!-- EVOLUÇÃO -->
+  <!-- DESENVOLVIMENTO -->
+  <div class="tab-panel" id="tab-dev">
+    <div class="shr" style="margin-bottom:0.5rem">
+      <div class="shr-title">Desenvolvimento Individual</div>
+      <div style="font-size:11px;color:var(--muted)">Selecione um colaborador</div>
+    </div>
+
+    <div class="filter-row" id="devTeamFilter" style="margin-bottom:10px">
+      <button class="fb active" onclick="devFilterTeam('Todos',this)">Todos</button>
+      <button class="fb" onclick="devFilterTeam('Pedro',this)">Pedro</button>
+      <button class="fb" onclick="devFilterTeam('Beatriz',this)">Beatriz</button>
+      <button class="fb" onclick="devFilterTeam('Vanessa',this)">Vanessa</button>
+      <button class="fb" onclick="devFilterTeam('Ricardo',this)">Ricardo</button>
+    </div>
+
+    <input type="text" class="srch" id="devSrch" placeholder="🔍 Buscar colaborador..." oninput="renderDevList()">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="devLayout">
+      <!-- Lista de reps -->
+      <div>
+        <div class="sec-lbl" style="margin-top:0">Colaboradores</div>
+        <div id="devRepList" style="display:flex;flex-direction:column;gap:6px;max-height:520px;overflow-y:auto;padding-right:4px"></div>
+      </div>
+      <!-- Painel de desenvolvimento -->
+      <div id="devPanel">
+        <div class="chart-card" style="text-align:center;padding:2rem 1rem;color:var(--muted)">
+          <div style="font-size:28px;margin-bottom:8px">👈</div>
+          <div style="font-size:12px;font-weight:700">Selecione um colaborador ao lado para ver seu plano de desenvolvimento</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="tab-panel" id="tab-diario">
     <div class="shr">
       <div class="shr-title">Evolução Diária</div>
@@ -443,6 +532,7 @@ body {
         <div class="li"><div class="ld" style="background:#6aaeff"></div>Pedro</div>
         <div class="li"><div class="ld" style="background:#3dd68c"></div>Beatriz</div>
         <div class="li"><div class="ld" style="background:#ffb74d"></div>Vanessa</div>
+        <div class="li"><div class="ld" style="background:#c084fc"></div>Ricardo</div>
         <div class="li"><div class="ld" style="background:rgba(255,255,255,0.25)"></div>Meta (107)</div>
       </div>
       <canvas id="evoChart" style="max-height:220px"></canvas>
@@ -465,14 +555,40 @@ body {
     <div id="lostContent"></div>
   </div>
 
+  <!-- MULTIPLICADOR -->
+  <div class="tab-panel" id="tab-mult">
+    <div class="shr" style="margin-bottom:0.5rem">
+      <div class="shr-title">Painel do Multiplicador</div>
+      <div style="font-size:11px;color:var(--muted)">Ranking por equipe</div>
+    </div>
 
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted)">Data:</div>
+      <select id="multDateSelect" class="srch" style="margin-bottom:0;width:auto;padding:6px 12px;font-size:12px" onchange="renderMultTeam()">
+        <option value="">Mais recente</option>
+      </select>
+    </div>
+
+    <!-- Filtro por equipe -->
+    <div class="filter-row" id="multTeamFilter" style="margin-bottom:14px">
+      <button class="fb active" onclick="multSetTeam('Pedro',this)">🔵 Pedro</button>
+      <button class="fb" onclick="multSetTeam('Beatriz',this)">🟢 Beatriz</button>
+      <button class="fb" onclick="multSetTeam('Vanessa',this)">🟠 Vanessa</button>
+      <button class="fb" onclick="multSetTeam('Ricardo',this)">🟣 Ricardo</button>
+    </div>
+
+    <div id="multTeamContent"></div>
+  </div>
 
 </div>
 
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script>
+
+
 const META = 107;
 const META_INDIVIDUAL = {
   'Sebastiao Aguiar De Souza': 80,
@@ -500,6 +616,41 @@ const TEAMS = {
   ],
 };
 const TC = { Pedro:'#6aaeff', Beatriz:'#3dd68c', Vanessa:'#ffb74d', Ricardo:'#c084fc' };
+// ── IDs dos reps (da planilha BD) ──
+const REP_IDS = {
+  2391610: 'Daiane Luiz Ferreira',
+  2428354: 'Amabile Bernardino Dos Santos',
+  2391329: 'Nayara Machado Da Silva',
+  2390951: 'Raquel De Negreiros Aguiar',
+  2391228: 'Amanda Oliveira Nogueira',
+  2132370: 'Sthefany De Araujo Bahiense Eineck Correia',
+  2391269: 'Ana Paula Alves Pereira Xavier',
+  2438943: 'Evandro Jose Silva Carvalho',
+  2461228: 'Jailson Gomes De Oliveira',
+  2428375: 'Wallace De Barros Silva',
+  2439625: 'Daiane Da Silva Andrade',
+  2209682: 'Myrella Leandra Rodrigues De Sousa',
+  2126582: 'Giovana Eliseu Santos Silva',
+  2433760: 'Janaina Barbosa Antonio',
+  2452967: 'Josileni Dos Santos Da Silva',
+  2433688: 'Adrielle Rodrigues Serrinha',
+  2428349: 'Lais Da Silva Pimentel',
+  2194273: 'Estevao Costa Dos Santos',
+  2428388: 'Sandra Mara Sanches Gravino Da Silva',
+  2132386: 'Ana Lucia Soares Pena Carneiro',
+  2427740: 'Alexandra Marques De Souza Dias Paschoal',
+  2461246: 'Sebastiao Aguiar De Souza',
+  2461250: 'Pedro Henrique Cassani Ferreira Rivas',
+  2148553: 'Alessandra Coutinho De Figueiredo',
+  2426993: 'Emilly Gabriele Monteiro De Lima Rodrigues',
+  2461324: 'Paulo Douglas Ribeiro Gomes',
+  2461216: 'Demetrius Martins Gama',
+  2370481: 'Ana Beatriz Dos Santos Silva',
+  2370120: 'Geovanna Santos Martins',
+  2391162: 'Andressa Santana Da Silva Costa',
+  2391540: 'Alessandra Domingues Da Costa',
+  2391136: 'Barbara Cristina Silva Do Nascimento',
+};
 const INITIAL = {
   'Alessandra Domingues Da Costa':103,'Barbara Cristina Silva Do Nascimento':101,'Daiane Luiz Ferreira':98,
   'Amabile Bernardino Dos Santos':96,'Myrella Leandra Rodrigues De Sousa':94,'Nayara Machado Da Silva':93,
@@ -516,26 +667,28 @@ const INITIAL = {
 };
 
 // ── DADOS CARREGADOS DA PLANILHA ──
+// Campos: date, name, prod (líquida), efetiva, util (%), tempoProceso (dias), tempoEfetivo (dias)
 const PRELOADED = [
-  {date:'2026-05-10',name:'Daiane Luiz Ferreira',prod:128},
-  {date:'2026-05-10',name:'Amabile Bernardino Dos Santos',prod:124},
-  {date:'2026-05-10',name:'Nayara Machado Da Silva',prod:113},
-  {date:'2026-05-10',name:'Raquel De Negreiros Aguiar',prod:95},
-  {date:'2026-05-10',name:'Wallace De Barros Silva',prod:148},
-  {date:'2026-05-10',name:'Daiane Da Silva Andrade',prod:110},
-  {date:'2026-05-10',name:'Myrella Leandra Rodrigues De Sousa',prod:118},
-  {date:'2026-05-10',name:'Janaina Barbosa Antonio',prod:104},
-  {date:'2026-05-10',name:'Josileni Dos Santos Da Silva',prod:120},
-  {date:'2026-05-10',name:'Lais Da Silva Pimentel',prod:106},
-  {date:'2026-05-10',name:'Estevao Costa Dos Santos',prod:147},
-  {date:'2026-05-10',name:'Sandra Mara Sanches Gravino Da Silva',prod:128},
-  {date:'2026-05-10',name:'Pedro Henrique Cassani Ferreira Rivas',prod:122},
-  {date:'2026-05-10',name:'Paulo Douglas Ribeiro Gomes',prod:149},
-  {date:'2026-05-10',name:'Demetrius Martins Gama',prod:0},
-  {date:'2026-05-10',name:'Geovanna Santos Martins',prod:113},
+  // 12/05
+  {date:'2026-05-12',name:'Daiane Luiz Ferreira',prod:122,efetiva:157,util:77.98},
+  {date:'2026-05-12',name:'Amabile Bernardino Dos Santos',prod:114,efetiva:144,util:79.2},
+  {date:'2026-05-12',name:'Nayara Machado Da Silva',prod:126,efetiva:156,util:80.79},
+  {date:'2026-05-12',name:'Raquel De Negreiros Aguiar',prod:111,efetiva:138,util:80.55},
+  {date:'2026-05-12',name:'Wallace De Barros Silva',prod:152,efetiva:162,util:93.88},
+  {date:'2026-05-12',name:'Daiane Da Silva Andrade',prod:124,efetiva:139,util:89.03},
+  {date:'2026-05-12',name:'Myrella Leandra Rodrigues De Sousa',prod:111,efetiva:142,util:77.95},
+  {date:'2026-05-12',name:'Janaina Barbosa Antonio',prod:110,efetiva:134,util:81.84},
+  {date:'2026-05-12',name:'Josileni Dos Santos Da Silva',prod:119,efetiva:134,util:89.32},
+  {date:'2026-05-12',name:'Lais Da Silva Pimentel',prod:119,efetiva:144,util:82.54},
+  {date:'2026-05-12',name:'Estevao Costa Dos Santos',prod:146,efetiva:171,util:85.42},
+  {date:'2026-05-12',name:'Sandra Mara Sanches Gravino Da Silva',prod:111,efetiva:147,util:75.37},
+  {date:'2026-05-12',name:'Pedro Henrique Cassani Ferreira Rivas',prod:122,efetiva:145,util:84.55},
+  {date:'2026-05-12',name:'Paulo Douglas Ribeiro Gomes',prod:144,efetiva:150,util:96.18},
+  {date:'2026-05-12',name:'Demetrius Martins Gama',prod:107,efetiva:111,util:96.74},
+  {date:'2026-05-12',name:'Geovanna Santos Martins',prod:136,efetiva:183,util:74.27},
 ];
 
-// Reps fora de operação na última data
+// Reps fora de operação na última data (12/05)
 const ABSENT = new Set([
   'Alessandra Domingues Da Costa','Barbara Cristina Silva Do Nascimento',
   'Amanda Oliveira Nogueira','Sthefany De Araujo Bahiense Eineck Correia',
@@ -547,23 +700,20 @@ const ABSENT = new Set([
   'Ana Beatriz Dos Santos Silva','Andressa Santana Da Silva Costa',
 ]);
 
-const SK = 'sprint_v2';
+// Sempre reinicia com PRELOADED limpo + dados do localStorage que não sejam PRELOADED
+const SK = 'sprint_v4'; // reseta cache — limpa dados com team=null
 function load() { try { return JSON.parse(localStorage.getItem(SK))||[]; } catch { return []; } }
 function save(d) { localStorage.setItem(SK, JSON.stringify(d)); }
 
 let launches = load(), chart = null, csvPrev = null;
 
-// Injeta dados pré-carregados da planilha se ainda não existirem
-PRELOADED.forEach((p,i) => {
-  const exists = launches.some(l => l.date === p.date && l.name.trim() === p.name.trim());
-  if (!exists) launches.push({...p, team: getT(p.name), id: 900000 + i});
-});
-save(launches);
 let aTF = 'Todos', aSF = null;
 
 function getT(n) { const nt=n.trim(); for (const [t,r] of Object.entries(TEAMS)) if (r.map(x=>x.trim()).includes(nt)) return t; return null; }
 function getMeta(n) { return META_INDIVIDUAL[n.trim()] ?? META; }
-function getLast(n) { const nt=n.trim(); const r=launches.filter(l=>l.name.trim()===nt).sort((a,b)=>b.date.localeCompare(a.date)); return r.length?r[0].prod:(INITIAL[nt]??null); }
+function getLast(n) { const nt=n.trim(); const r=launches.filter(l=>l.name.trim()===nt).sort((a,b)=>b.date.localeCompare(a.date)); return r.length?r[0].prod:null; }
+function getEfetiva(n) { const nt=n.trim(); const r=launches.filter(l=>l.name.trim()===nt&&l.efetiva!=null).sort((a,b)=>b.date.localeCompare(a.date)); return r.length?r[0].efetiva:null; }
+function getUtil(n) { const nt=n.trim(); const r=launches.filter(l=>l.name.trim()===nt&&l.util!=null).sort((a,b)=>b.date.localeCompare(a.date)); return r.length?r[0].util:null; }
 function fd(iso) { const [y,m,d]=iso.split('-'); return `${d}/${m}`; }
 function sn(n) { return n.split(' ').slice(0,2).join(' '); }
 function isAbsent(n) { return ABSENT.has(n.trim()); }
@@ -600,7 +750,7 @@ function renderPlacar() {
     <div class="kpi-card red"><div class="kv">${below}</div><div class="kl">Abaixo</div></div>
     <div class="kpi-card gray"><div class="kv">${absent}</div><div class="kl">Fora Op.</div></div>`;
 
-  const sorted=Object.entries(ach).sort((a,b)=>b[1]-a[1]);
+  const sorted=Object.entries(ach).sort((a,b)=> b[1]-a[1] || avgs[b[0]]-avgs[a[0]]);
   const medals=['🥇','🥈','🥉','4º'];
   const FCs={Pedro:'#6aaeff',Beatriz:'#3dd68c',Vanessa:'#ffb74d',Ricardo:'#c084fc'};
   document.getElementById('placarGrid').innerHTML=sorted.map(([team,cnt],i)=>{
@@ -627,19 +777,12 @@ function renderPlacar() {
   if (sorted[0]&&sorted[0][1]>0) {
     document.getElementById('winnerBar').style.display='flex';
     document.getElementById('winnerTxt').textContent=`${sorted[0][0]} lidera com ${sorted[0][1]} colaboradores na meta!`;
-
   }
 }
 
 function getHistory(name) {
-  // pega todos os lançamentos do rep ordenados por data
   const recs = launches.filter(l=>l.name===name).sort((a,b)=>a.date.localeCompare(b.date));
-  // sempre inclui o valor inicial como primeiro ponto
-  const base = INITIAL[name] ?? null;
-  const pts = [];
-  if (base !== null) pts.push({ date:'Base', prod: base });
-  recs.forEach(r => pts.push({ date: fd(r.date), prod: r.prod }));
-  return pts;
+  return recs.map(r => ({ date: fd(r.date), prod: r.prod }));
 }
 
 function renderReps() {
@@ -655,7 +798,12 @@ function renderReps() {
       rows.push({name,team,prod,s});
     });
   }
-  rows.sort((a,b)=>(b.prod??0)-(a.prod??0));
+  rows.sort((a,b)=>{
+    const aa = isAbsent(a.name), ba = isAbsent(b.name);
+    if(aa && !ba) return 1;
+    if(!aa && ba) return -1;
+    return (b.prod??0)-(a.prod??0);
+  });
 
   const wrap = document.getElementById('repCards');
   if(!rows.length){
@@ -663,14 +811,39 @@ function renderReps() {
     return;
   }
 
+  let absentSepAdded = false;
   wrap.innerHTML = rows.map((r,i) => {
     const color = TC[r.team] ?? '#8892a4';
     const repMeta = getMeta(r.name);
-    const diff = r.prod !== null ? r.prod - repMeta : null;
+    const absent = isAbsent(r.name);
+    const efetiva = getEfetiva(r.name);
+    const util = getUtil(r.name);
+    const diff = r.prod !== null && !absent ? r.prod - repMeta : null;
     const ds = diff !== null ? (diff>=0?`+${diff}`:String(diff)) : '—';
-    const prodColor = r.prod >= repMeta ? '#3dd68c' : r.prod >= repMeta*.85 ? '#ffb74d' : '#ff6b6b';
-    const pct = r.prod ? Math.min(Math.round((r.prod/repMeta)*100),100) : 0;
+    const prodColor = absent ? '#8892a4' : r.prod >= repMeta ? '#3dd68c' : r.prod >= repMeta*.85 ? '#ffb74d' : '#ff6b6b';
+    const utilColor = !util ? '#8892a4' : util >= 85 ? '#3dd68c' : util >= 70 ? '#ffb74d' : '#ff6b6b';
+    const pct = r.prod && !absent ? Math.min(Math.round((r.prod/repMeta)*100),100) : 0;
     const hist = getHistory(r.name);
+    let sep = '';
+    if (absent && !absentSepAdded) {
+      absentSepAdded = true;
+      sep = `<div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:4px 0;">
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+        <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)">⬜ Fora de operação</span>
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+      </div>`;
+    }
+
+    if (absent) {
+      return sep + `<div class="rep-card" style="opacity:0.45;border-style:dashed;">
+        <div class="rep-card-top">
+          <div>
+            <div class="rep-card-team" style="color:${color}">${r.team}</div>
+            <div class="rep-card-name" style="color:var(--muted)">${r.name}</div>
+          </div>
+        </div>
+      </div>`;
+    }
 
     // mini barra chart
     const maxVal = Math.max(...hist.map(h=>h.prod), META);
@@ -711,6 +884,7 @@ function renderReps() {
         <div style="text-align:right">
           <div class="rep-card-prod" style="color:${prodColor}">${r.prod??'—'}</div>
           <div class="rep-card-meta">Meta: ${repMeta} · <span style="color:${prodColor}">${ds}</span></div>
+          ${efetiva?`<div style="font-size:9px;color:var(--muted);margin-top:2px">Efetiva: <strong style="color:#6aaeff">${efetiva}</strong> · Util: <strong style="color:${utilColor}">${util}%</strong></div>`:''}
         </div>
       </div>
       <div class="rep-evo">${bars}</div>
@@ -731,30 +905,105 @@ function renderDaily() {
   tb.innerHTML=sorted.map(l=>{
     const m=getMeta(l.name);
     const d=l.prod-m, ds=d>=0?`+${d}`:String(d), dc=d>=0?'style="color:#3dd68c"':'style="color:#ff6b6b"';
-    return `<tr><td>${fd(l.date)}</td><td>${sn(l.name)}</td><td style="color:${TC[l.team]};font-weight:700">${l.team}</td><td><strong>${l.prod}</strong></td><td ${dc}>${ds}</td><td>${pillOf(l.prod,l.name)}</td></tr>`;
+    const t = l.team || getT(l.name) || '—';
+    return `<tr><td>${fd(l.date)}</td><td>${sn(l.name)}</td><td style="color:${TC[t]??'var(--muted)'};font-weight:700">${t}</td><td><strong>${l.prod}</strong></td><td ${dc}>${ds}</td><td>${pillOf(l.prod,l.name)}</td></tr>`;
   }).join('');
 }
 
 function renderChart() {
+  if (window.ChartDataLabels) Chart.register(ChartDataLabels);
   const days=[...new Set(launches.map(l=>l.date))].sort();
   const ctx=document.getElementById('evoChart').getContext('2d');
   if(chart)chart.destroy();
   const td={};
-  for(const t of ['Pedro','Beatriz','Vanessa'])
-    td[t]=days.map(d=>{const r=launches.filter(l=>l.date===d&&l.team===t);return r.length?Math.round(r.reduce((s,x)=>s+x.prod,0)/r.length):null;});
-  chart=new Chart(ctx,{
-    type:'line',
-    data:{
-      labels:days.length?days.map(fd):['Sem dados'],
-      datasets:[
-        {label:'Pedro',   data:td.Pedro,   borderColor:'#6aaeff',backgroundColor:'rgba(106,174,255,0.07)',tension:0.4,pointBackgroundColor:'#6aaeff',pointRadius:4,borderWidth:2,spanGaps:true},
-        {label:'Beatriz', data:td.Beatriz, borderColor:'#3dd68c',backgroundColor:'rgba(61,214,140,0.07)', tension:0.4,pointBackgroundColor:'#3dd68c',pointRadius:4,borderWidth:2,spanGaps:true},
-        {label:'Vanessa', data:td.Vanessa, borderColor:'#ffb74d',backgroundColor:'rgba(255,183,77,0.07)', tension:0.4,pointBackgroundColor:'#ffb74d',pointRadius:4,borderWidth:2,spanGaps:true},
-        {label:'Meta',    data:Array(Math.max(days.length,2)).fill(META),borderColor:'rgba(255,255,255,0.2)',borderDash:[6,4],pointRadius:0,borderWidth:1.5,fill:false},
-      ]
-    },
-    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#8892a4',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'}},y:{ticks:{color:'#8892a4',font:{size:10}},grid:{color:'rgba(255,255,255,0.04)'},min:60}}}
-  });
+  for(const t of ['Pedro','Beatriz','Vanessa','Ricardo'])
+    td[t]=days.map(d=>{
+      const r=launches.filter(l=>l.date===d && getT(l.name)===t && l.prod>0);
+      return r.length?Math.round(r.reduce((s,x)=>s+x.prod,0)/r.length):null;
+    });
+
+  const singleDay = days.length <= 1;
+  const teams = ['Pedro','Beatriz','Vanessa','Ricardo'];
+  const colors = {'Pedro':'#6aaeff','Beatriz':'#3dd68c','Vanessa':'#ffb74d','Ricardo':'#c084fc'};
+
+  if (singleDay) {
+    // Bar chart: one bar per team
+    const vals = teams.map(t => td[t][0] ?? null);
+    chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: teams,
+        datasets: [{
+          data: vals,
+          backgroundColor: teams.map(t => colors[t]+'cc'),
+          borderColor: teams.map(t => colors[t]),
+          borderWidth: 2,
+          borderRadius: 8,
+        },
+        {
+          type:'line', label:'Meta', data: Array(4).fill(META),
+          borderColor:'rgba(255,255,255,0.3)', borderDash:[6,4],
+          pointRadius:0, borderWidth:1.5, fill:false,
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:true,
+        plugins:{
+          legend:{display:false},
+          datalabels:{
+            display: (ctx) => ctx.datasetIndex===0,
+            color:'#fff', font:{weight:'bold',size:13},
+            anchor:'end', align:'top', offset:2,
+            formatter: v => v ?? '—',
+          },
+          tooltip:{
+            backgroundColor:'rgba(15,20,40,0.95)',
+            callbacks:{ label: ctx => ` Média: ${ctx.parsed.y ?? '—'}` }
+          }
+        },
+        scales:{
+          x:{ticks:{color:'#e8edf5',font:{size:12,weight:'bold'}}, grid:{display:false}},
+          y:{ticks:{color:'#8892a4',font:{size:10}}, grid:{color:'rgba(255,255,255,0.04)'}, min:60, suggestedMax:170}
+        }
+      }
+    });
+  } else {
+    // Line chart: one line per team
+    chart = new Chart(ctx, {
+      type:'line',
+      data:{
+        labels: days.map(fd),
+        datasets:[
+          ...teams.map(t=>({label:t, data:td[t], borderColor:colors[t], backgroundColor:colors[t]+'12', tension:0.4, pointBackgroundColor:colors[t], pointRadius:6, pointHoverRadius:9, borderWidth:2.5, spanGaps:true})),
+          {label:'Meta', data:Array(Math.max(days.length,2)).fill(META), borderColor:'rgba(255,255,255,0.2)', borderDash:[6,4], pointRadius:0, borderWidth:1.5, fill:false},
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:true,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{display:false},
+          datalabels:{
+            display: ctx => ctx.dataset.label !== 'Meta',
+            color: ctx => ctx.dataset.borderColor,
+            font:{weight:'bold',size:10},
+            anchor:'end', align:'top', offset:3,
+            formatter: v => v ?? '',
+          },
+          tooltip:{
+            backgroundColor:'rgba(15,20,40,0.95)',
+            titleColor:'#e8edf5', bodyColor:'#8892a4',
+            borderColor:'rgba(255,255,255,0.1)', borderWidth:1, padding:10,
+            callbacks:{ label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y ?? '—'}` }
+          }
+        },
+        scales:{
+          x:{ticks:{color:'#8892a4',font:{size:10}}, grid:{color:'rgba(255,255,255,0.04)'}},
+          y:{ticks:{color:'#8892a4',font:{size:10}}, grid:{color:'rgba(255,255,255,0.04)'}, min:60, suggestedMax:170}
+        }
+      }
+    });
+  }
 }
 
 function renderLost() {
@@ -781,15 +1030,360 @@ function switchTab(id,el){
   if(id==='diario')renderChart();
 }
 
-function renderAll(){renderPlacar();renderReps();renderDaily();renderLost();}
+// ── DESENVOLVIMENTO ──
+let devTeamFilter = 'Todos';
+let devActiveRep  = null;
+
+function devFilterTeam(t, el) {
+  devTeamFilter = t;
+  document.querySelectorAll('#devTeamFilter .fb').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderDevList();
+}
+
+function renderDevList() {
+  const q = (document.getElementById('devSrch')?.value||'').toLowerCase();
+  const list = document.getElementById('devRepList');
+  let rows = [];
+  for (const [team, reps] of Object.entries(TEAMS)) {
+    if (devTeamFilter !== 'Todos' && team !== devTeamFilter) continue;
+    reps.filter(n=>!isAbsent(n)).forEach(name => {
+      if (q && !name.toLowerCase().includes(q)) return;
+      rows.push({name, team});
+    });
+  }
+  rows.sort((a,b)=>(getLast(b.name)??0)-(getLast(a.name)??0));
+  list.innerHTML = rows.map(r => {
+    const prod = getLast(r.name);
+    const m = getMeta(r.name);
+    const color = TC[r.team]??'#8892a4';
+    const pcolor = prod>=m?'#3dd68c':prod>=m*.85?'#ffb74d':'#ff6b6b';
+    const isAct = devActiveRep===r.name;
+    return `<div class="dev-rep-row${isAct?' active':''}" onclick="showDevPanel('${r.name.replace(/'/g,"\\'")}')">
+      <div class="dev-rep-dot" style="background:${color}"></div>
+      <div class="dev-rep-name">${r.name}</div>
+      <div class="dev-rep-prod" style="color:${pcolor}">${prod??'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+function getTips(name) {
+  const prod    = getLast(name);
+  const efetiva = getEfetiva(name);
+  const util    = getUtil(name);
+  const meta    = getMeta(name);
+  const hist    = getHistory(name);
+  const gap     = meta - (prod??0);
+  const trend   = hist.length>=2 ? hist[hist.length-1].prod - hist[0].prod : 0;
+  const tips    = [];
+
+  // ── Diagnóstico por Utilização ──
+  if (util !== null) {
+    if (util < 70) {
+      tips.push({
+        icon: '⏱️',
+        title: `Utilização Baixa (${util}%) — Tempo Parado`,
+        items: [
+          `Apenas <strong>${util}%</strong> do tempo em processo está sendo usado efetivamente. O rep está perdendo <strong>${(100-util).toFixed(1)}%</strong> do tempo disponível.`,
+          '<strong>Ação imediata:</strong> Verificar se há espera por reposição de endereços — comunicar ao líder imediatamente.',
+          'Verificar se o rep está aguardando liberação de tarefas no sistema — realocar para área com mais volume.',
+          'Checar se há pausas não programadas ou conversas durante o processo.',
+          '<strong>Meta de utilização:</strong> acima de 85% para alta performance.',
+        ]
+      });
+    } else if (util < 85) {
+      tips.push({
+        icon: '⏱️',
+        title: `Utilização Moderada (${util}%) — Pode Melhorar`,
+        items: [
+          `Utilização de <strong>${util}%</strong> — há espaço para ganho de produtividade sem aumentar o ritmo.`,
+          'Pequenas pausas acumuladas são o principal gargalo. Foco em continuidade de movimento.',
+          'Verificar se o rep está confirmando corretamente sem precisar voltar ao endereço.',
+        ]
+      });
+    } else {
+      tips.push({
+        icon: '✅',
+        title: `Boa Utilização (${util}%) — Foco na Eficiência`,
+        items: [
+          `Utilização de <strong>${util}%</strong> — tempo bem aproveitado! O ganho agora vem da velocidade de execução.`,
+          'Com utilização alta, a melhora na líquida vem de reduzir erros e retrabalho no picking.',
+          'Trabalhar no ritmo de leitura antecipada dos endereços enquanto coleta o item atual.',
+        ]
+      });
+    }
+  }
+
+  // ── Diagnóstico Líquida vs Efetiva ──
+  if (prod !== null && efetiva !== null && efetiva > 0) {
+    const ratio = prod / efetiva;
+    if (ratio < 0.75) {
+      tips.push({
+        icon: '🔄',
+        title: `Alto Retrabalho — Líquida ${prod} vs Efetiva ${efetiva}`,
+        items: [
+          `Só <strong>${Math.round(ratio*100)}%</strong> do que foi coletado foi aceito como válido. Há muito retrabalho ou erro de picking.`,
+          '<strong>Causa mais comum:</strong> ler errado o endereço ou coletar produto similar ao solicitado.',
+          'Pedir ao rep para verbalizar o endereço antes de coletar — "confirmar em voz baixa".',
+          'Verificar se a leitura do código de barras está sendo feita corretamente (não forçar confirmação manual).',
+          'Checar se há endereços com produtos trocados na gôndola — reportar ao estoque.',
+        ]
+      });
+    } else if (ratio < 0.85) {
+      tips.push({
+        icon: '🎯',
+        title: `Precisão a Melhorar — Líquida ${prod} vs Efetiva ${efetiva}`,
+        items: [
+          `<strong>${Math.round((1-ratio)*100)}%</strong> das coletas não foram validadas. Foco em precisão.`,
+          'Garantir que está lendo o endereço completo — nível, coluna e posição — antes de coletar.',
+          'Não confirmar sem ter certeza do produto correto.',
+        ]
+      });
+    }
+  }
+
+  // ── Gap da Meta ──
+  if (prod !== null && prod < meta) {
+    tips.push({
+      icon: '🎯',
+      title: `Gap da Meta: ${gap} un/h para atingir ${meta}`,
+      items: [
+        `Precisa de <strong>${gap} un/h</strong> a mais. ${gap<=10?'Muito próximo — pequenos ajustes fazem a diferença!':gap<=20?'Foco nos pontos acima que têm maior impacto.':'Trabalhar nos múltiplos pontos identificados acima.'}`,
+        'Priorizar o ponto de maior impacto: ' + (util&&util<70?'aumentar utilização (maior ganho possível)':efetiva&&prod/efetiva<0.75?'reduzir retrabalho (maior ganho possível)':'técnica de movimento contínuo'),
+      ]
+    });
+  }
+
+  // ── Tendência ──
+  if (trend < 0) {
+    tips.push({
+      icon: '📉', title: 'Tendência de Queda',
+      items: [
+        `Produtividade caiu <strong>${Math.abs(trend)} un/h</strong> em relação ao início. Identificar o que mudou.`,
+        'Verificar se houve mudança de área, tipo de produto ou rota de picking.',
+        'Conversar individualmente — pode haver fator motivacional ou físico envolvido.',
+      ]
+    });
+  } else if (trend > 5) {
+    tips.push({
+      icon: '📈', title: 'Evolução Positiva — Manter o Ritmo!',
+      items: [
+        `Crescimento de <strong>+${trend} un/h</strong> desde o início. Ótimo trabalho!`,
+        'Identificar o que está funcionando e replicar para os colegas de equipe.',
+        'Compartilhar a técnica com o multiplicador para disseminar boas práticas.',
+      ]
+    });
+  }
+
+  // ── Técnicas de Picking ──
+  tips.push({
+    icon: '⚡', title: 'Técnicas de Picking para Ganhar Velocidade',
+    items: [
+      '<strong>Leitura antecipada:</strong> leia o próximo endereço enquanto ainda está coletando o atual — economiza 2-3 seg por coleta.',
+      '<strong>Posicionamento corporal:</strong> gire o corpo na direção do próximo endereço antes de terminar a coleta atual.',
+      '<strong>Escaneamento sem parar:</strong> mantenha o movimento enquanto escaneia — não pause completamente.',
+      '<strong>Organização do carrinho:</strong> deixe o carrinho na posição ideal para o próximo endereço antes de coletar.',
+      `${util&&util>=85?'<strong>Com sua boa utilização</strong>, o próximo nível é trabalhar no ritmo do scanner — sincronizar leitura + movimento.':'<strong>Prioridade:</strong> aumentar o tempo efetivo antes de trabalhar na velocidade de coleta.'}`,
+    ]
+  });
+
+  return tips;
+}
+
+function showDevPanel(name) {
+  devActiveRep = name;
+  renderDevList();
+
+  const prod    = getLast(name);
+  const efetiva = getEfetiva(name);
+  const util    = getUtil(name);
+  const meta    = getMeta(name);
+  const team    = getT(name);
+  const color   = TC[team]??'#8892a4';
+  const hist    = getHistory(name);
+  const tips    = getTips(name);
+  const pcolor  = prod>=meta?'#3dd68c':prod>=meta*.85?'#ffb74d':'#ff6b6b';
+  const ucolor  = !util?'#8892a4':util>=85?'#3dd68c':util>=70?'#ffb74d':'#ff6b6b';
+  const diff    = prod!==null?prod-meta:null;
+  const ds      = diff!==null?(diff>=0?`+${diff}`:String(diff)):'—';
+  const trend   = hist.length>=2?hist[hist.length-1].prod-hist[0].prod:null;
+
+  document.getElementById('devPanel').innerHTML = `
+    <div class="chart-card" style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0"></div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text)">${name}</div>
+          <div style="font-size:10px;color:var(--muted)">${team} · Meta: ${meta}</div>
+        </div>
+      </div>
+      <div class="dev-metric-row"><div class="dev-metric-lbl">Prod. Líquida</div><div class="dev-metric-val" style="color:${pcolor}">${prod??'—'}</div></div>
+      ${efetiva!==null?`<div class="dev-metric-row"><div class="dev-metric-lbl">Prod. Efetiva</div><div class="dev-metric-val" style="color:#6aaeff">${efetiva}</div></div>`:''}
+      ${util!==null?`<div class="dev-metric-row"><div class="dev-metric-lbl">Utilização</div><div class="dev-metric-val" style="color:${ucolor}">${util}%</div></div>`:''}
+      <div class="dev-metric-row"><div class="dev-metric-lbl">vs Meta</div><div class="dev-metric-val" style="color:${diff!==null?(diff>=0?'#3dd68c':'#ff6b6b'):'var(--muted)'}">${ds}</div></div>
+      ${trend!==null?`<div class="dev-metric-row"><div class="dev-metric-lbl">Evolução</div><div class="dev-metric-val" style="color:${trend>0?'#3dd68c':trend<0?'#ff6b6b':'var(--muted)'}">${trend>0?'+':''}${trend} un/h</div></div>`:''}
+      <div style="margin-top:8px">${pillOf(prod,name)}</div>
+    </div>
+    ${tips.map(t=>`<div class="dev-tip"><div class="dev-tip-head"><span class="dev-tip-icon">${t.icon}</span>${t.title}</div><div class="dev-tip-body"><ul>${t.items.map(i=>`<li>${i}</li>`).join('')}</ul></div></div>`).join('')}`;
+}
+
+// ── MULTIPLICADOR ──
+let multActiveTeam = 'Pedro';
+
+function multSetTeam(team, el) {
+  multActiveTeam = team;
+  document.querySelectorAll('#multTeamFilter .fb').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderMultTeam();
+}
+
+function multPopulateDates() {
+  const sel = document.getElementById('multDateSelect');
+  if (!sel) return;
+  const days = [...new Set(launches.map(l=>l.date))].sort((a,b)=>b.localeCompare(a));
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Mais recente</option>' +
+    days.map(d => `<option value="${d}"${d===current?' selected':''}>${fd(d)}</option>`).join('');
+}
+
+function getLastOnDate(name, date) {
+  const nt = name.trim();
+  let recs;
+  if (date) {
+    recs = launches.filter(l => l.name.trim()===nt && l.date===date);
+  } else {
+    recs = launches.filter(l => l.name.trim()===nt).sort((a,b)=>b.date.localeCompare(a.date));
+    return recs.length ? recs[0] : null;
+  }
+  return recs.length ? recs[0] : null;
+}
+
+function renderMultTeam() {
+  multPopulateDates();
+  const team = multActiveTeam;
+  const reps = TEAMS[team] || [];
+  const color = TC[team] ?? '#8892a4';
+  const selDate = document.getElementById('multDateSelect')?.value || '';
+
+  // Absent check: if date selected, use that day's data; if absent use ABSENT set for latest
+  const rows = reps.map(name => {
+    const rec = getLastOnDate(name, selDate);
+    const prod    = rec?.prod ?? null;
+    const efetiva = rec?.efetiva ?? null;
+    const util    = rec?.util ?? null;
+    const meta    = getMeta(name);
+    const absent  = selDate ? (rec===null) : isAbsent(name);
+    const id      = (() => { for (const [i,n] of Object.entries(REP_IDS)) if(n.trim()===name.trim()) return i; return '—'; })();
+    const diff    = (!absent && prod !== null) ? prod - meta : null;
+    const pcolor  = absent ? 'var(--muted)' : prod >= meta ? '#3dd68c' : prod >= meta*0.85 ? '#ffb74d' : '#ff6b6b';
+    const ucolor  = !util ? 'var(--muted)' : util >= 85 ? '#3dd68c' : util >= 70 ? '#ffb74d' : '#ff6b6b';
+    return { name, id, prod, efetiva, util, meta, absent, diff, pcolor, ucolor };
+  }).sort((a,b) => {
+    if (a.absent && !b.absent) return 1;
+    if (!a.absent && b.absent) return -1;
+    return (b.prod??0) - (a.prod??0);
+  });
+
+  const activeRows  = rows.filter(r => !r.absent);
+  const absentRows  = rows.filter(r => r.absent);
+  const naMetaCount = activeRows.filter(r => r.prod >= r.meta).length;
+  const avgProd     = activeRows.length ? Math.round(activeRows.reduce((s,r)=>s+(r.prod??0),0)/activeRows.length) : 0;
+  const utilRows    = activeRows.filter(r=>r.util);
+  const avgUtil     = utilRows.length ? (utilRows.reduce((s,r)=>s+r.util,0)/utilRows.length).toFixed(1) : '—';
+
+  const dateLabel = selDate ? fd(selDate) : (() => {
+    const days = [...new Set(launches.map(l=>l.date))].sort((a,b)=>b.localeCompare(a));
+    return days.length ? fd(days[0]) : '—';
+  })();
+
+  const rowsHtml = rows.map((r, i) => {
+    if (r.absent) {
+      return `<tr style="opacity:0.4">
+        <td style="text-align:center;font-size:11px;color:var(--muted)">—</td>
+        <td style="font-size:10px;color:var(--muted);font-family:monospace">${r.id}</td>
+        <td style="text-align:center;font-size:11px;color:var(--muted)">—</td>
+        <td style="text-align:center;font-size:11px;color:var(--muted)">—</td>
+        <td style="text-align:center;font-size:11px;color:var(--muted)">—</td>
+        <td style="text-align:center"><span class="pill p-gray" style="font-size:9px">⬜ Fora</span></td>
+      </tr>`;
+    }
+    const rank   = activeRows.findIndex(x=>x.name===r.name)+1;
+    const medal  = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'';
+    const ds     = r.diff!==null?(r.diff>=0?`+${r.diff}`:String(r.diff)):'—';
+    const dcolor = r.diff===null?'var(--muted)':r.diff>=0?'#3dd68c':'#ff6b6b';
+    return `<tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+      <td style="font-size:13px;text-align:center;padding:8px 6px">${medal||rank}</td>
+      <td style="font-size:10px;color:var(--muted);font-family:monospace;padding:8px 6px">${r.id}</td>
+      <td style="text-align:center;padding:8px 6px"><strong style="font-size:15px;color:${r.pcolor}">${r.prod??'—'}</strong></td>
+      <td style="text-align:center;font-size:13px;color:#6aaeff;padding:8px 6px">${r.efetiva??'—'}</td>
+      <td style="text-align:center;font-size:13px;color:${r.ucolor};padding:8px 6px">${r.util??'—'}${r.util?'%':''}</td>
+      <td style="text-align:center;font-size:12px;color:${dcolor};font-weight:700;padding:8px 6px">${ds}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('multTeamContent').innerHTML = `
+    <div class="chart-card" style="border-top:3px solid ${color}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:${color}">Equipe ${team}</div>
+          <div style="font-size:16px;font-weight:900;color:var(--text)">${dateLabel} — Ranking do dia</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:10px;color:var(--muted)">Na meta</div>
+          <div style="font-size:22px;font-weight:900;color:#3dd68c">${naMetaCount}/${activeRows.length}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:14px">
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;text-align:center;flex:1">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted)">Média Líq.</div>
+          <div style="font-size:18px;font-weight:900;color:var(--text)">${avgProd}</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;text-align:center;flex:1">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted)">Média Util.</div>
+          <div style="font-size:18px;font-weight:900;color:var(--text)">${avgUtil}${avgUtil!=='—'?'%':''}</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;text-align:center;flex:1">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted)">Fora op.</div>
+          <div style="font-size:18px;font-weight:900;color:var(--muted)">${absentRows.length}</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:rgba(0,0,0,0.25)">
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);text-align:center">Rank</th>
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted)">ID</th>
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);text-align:center">Líquida</th>
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);text-align:center">Efetiva</th>
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);text-align:center">Util.</th>
+              <th style="padding:8px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);text-align:center">vs Meta</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderAll(){renderPlacar();renderReps();renderDaily();renderLost();renderDevList();renderMultTeam();}
+
 
 
 
 // init
 const now=new Date(),pad=n=>String(n).padStart(2,'0');
 const el=document.getElementById('topDate'); if(el) el.textContent=`${pad(now.getDate())}/${pad(now.getMonth()+1)}/${now.getFullYear()}`;
-const end=new Date('2026-05-24'),diff=Math.ceil((end-now)/(864e5));
+const end=new Date('2026-05-25'),diff=Math.ceil((end-now)/(864e5));
 document.getElementById('heroMeta').textContent=`Critério: mais colaboradores que atingiram a meta · ${diff>0?diff+' dias restantes':'Encerrada'}`;
+
+// Inject PRELOADED now that all functions are defined
+const preloadedKeys = new Set(PRELOADED.map(p => p.date + '|' + p.name.trim()));
+launches = launches.filter(l => !preloadedKeys.has(l.date + '|' + l.name.trim()));
+PRELOADED.forEach((p,i) => {
+  launches.push({...p, team: getT(p.name), id: 900000 + i});
+});
+save(launches);
+
 renderAll();
 </script>
 </body>

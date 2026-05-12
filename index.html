@@ -535,6 +535,18 @@ const PRELOADED = [
   {date:'2026-05-10',name:'Geovanna Santos Martins',prod:113},
 ];
 
+// Reps fora de operação na última data
+const ABSENT = new Set([
+  'Alessandra Domingues Da Costa','Barbara Cristina Silva Do Nascimento',
+  'Amanda Oliveira Nogueira','Sthefany De Araujo Bahiense Eineck Correia',
+  'Ana Paula Alves Pereira Xavier','Evandro Jose Silva Carvalho',
+  'Jailson Gomes De Oliveira','Giovana Eliseu Santos Silva',
+  'Adrielle Rodrigues Serrinha','Ana Lucia Soares Pena Carneiro',
+  'Alexandra Marques De Souza Dias Paschoal','Sebastiao Aguiar De Souza',
+  'Alessandra Coutinho De Figueiredo','Emilly Gabriele Monteiro De Lima Rodrigues',
+  'Ana Beatriz Dos Santos Silva','Andressa Santana Da Silva Costa',
+]);
+
 const SK = 'sprint_v2';
 function load() { try { return JSON.parse(localStorage.getItem(SK))||[]; } catch { return []; } }
 function save(d) { localStorage.setItem(SK, JSON.stringify(d)); }
@@ -554,9 +566,14 @@ function getMeta(n) { return META_INDIVIDUAL[n.trim()] ?? META; }
 function getLast(n) { const nt=n.trim(); const r=launches.filter(l=>l.name.trim()===nt).sort((a,b)=>b.date.localeCompare(a.date)); return r.length?r[0].prod:(INITIAL[nt]??null); }
 function fd(iso) { const [y,m,d]=iso.split('-'); return `${d}/${m}`; }
 function sn(n) { return n.split(' ').slice(0,2).join(' '); }
-function statOf(p,n) { const m=getMeta(n); if(p===null)return'sem'; if(p>=m)return'ok'; if(p>=m*.85)return'warn'; return'bad'; }
+function isAbsent(n) { return ABSENT.has(n.trim()); }
+function statOf(p,n) {
+  if(isAbsent(n)) return 'absent';
+  const m=getMeta(n); if(p===null)return'sem'; if(p>=m)return'ok'; if(p>=m*.85)return'warn'; return'bad';
+}
 function pillOf(p,n) {
   const s=statOf(p,n);
+  if(s==='absent') return '<span class="pill p-gray">⬜ Fora op.</span>';
   if(s==='ok')   return '<span class="pill p-ok">✅ Meta</span>';
   if(s==='warn') return '<span class="pill p-warn">🟠 Atenção</span>';
   if(s==='bad')  return '<span class="pill p-bad">🔴 Abaixo</span>';
@@ -564,36 +581,45 @@ function pillOf(p,n) {
 }
 
 function renderPlacar() {
-  const ach={}, avgs={};
+  const ach={}, avgs={}, absentCount={}, belowCount={};
   for (const [t,r] of Object.entries(TEAMS)) {
-    const ps=r.map(n=>({p:getLast(n),m:getMeta(n)})).filter(x=>x.p!==null);
-    ach[t]=ps.filter(x=>x.p>=x.m).length;
-    avgs[t]=ps.length?Math.round(ps.reduce((s,x)=>s+x.p,0)/ps.length):0;
+    const active = r.filter(n=>!isAbsent(n));
+    const ps = active.map(n=>({p:getLast(n),m:getMeta(n)})).filter(x=>x.p!==null);
+    ach[t]         = ps.filter(x=>x.p>=x.m).length;
+    belowCount[t]  = ps.filter(x=>x.p<x.m).length;
+    absentCount[t] = r.filter(n=>isAbsent(n)).length;
+    avgs[t]        = ps.length?Math.round(ps.reduce((s,x)=>s+x.p,0)/ps.length):0;
   }
-  const tot=Object.values(TEAMS).flat().length;
-  const ok=Object.values(ach).reduce((s,v)=>s+v,0);
+  const tot    = Object.values(TEAMS).flat().length;
+  const ok     = Object.values(ach).reduce((s,v)=>s+v,0);
+  const absent = Object.values(absentCount).reduce((s,v)=>s+v,0);
+  const below  = Object.values(belowCount).reduce((s,v)=>s+v,0);
+
   document.getElementById('gKpis').innerHTML=`
     <div class="kpi-card green"><div class="kv">${ok}</div><div class="kl">Na Meta</div></div>
-    <div class="kpi-card red"><div class="kv">${tot-ok}</div><div class="kl">Abaixo</div></div>
-    <div class="kpi-card blue"><div class="kv">${tot}</div><div class="kl">Total Reps</div></div>`;
+    <div class="kpi-card red"><div class="kv">${below}</div><div class="kl">Abaixo</div></div>
+    <div class="kpi-card gray"><div class="kv">${absent}</div><div class="kl">Fora Op.</div></div>`;
 
   const sorted=Object.entries(ach).sort((a,b)=>b[1]-a[1]);
   const medals=['🥇','🥈','🥉','4º'];
   const FCs={Pedro:'#6aaeff',Beatriz:'#3dd68c',Vanessa:'#ffb74d',Ricardo:'#c084fc'};
   document.getElementById('placarGrid').innerHTML=sorted.map(([team,cnt],i)=>{
-    const pct=Math.round((cnt/TEAMS[team].length)*100);
-    const bl=TEAMS[team].length-cnt;
-    const fc=FCs[team];
-    const cls=team.toLowerCase();
+    const active = TEAMS[team].length - absentCount[team];
+    const pct = active>0?Math.round((cnt/active)*100):0;
+    const bl  = belowCount[team];
+    const ab  = absentCount[team];
+    const fc  = FCs[team];
+    const cls = team.toLowerCase();
     return `<div class="placar-card">
       <div class="ph ${cls}">
         <div><div class="pn">${medals[i]} ${team}</div><div style="font-size:10px;color:var(--muted);margin-top:2px">Multiplicador · ${TEAMS[team].length} reps</div></div>
-        <div class="pb-badge">${cnt}/${TEAMS[team].length} na meta</div>
+        <div class="pb-badge">${cnt}/${active} na meta</div>
       </div>
       <div class="pb">
         <div class="prow"><div class="plbl">Na meta</div><div class="pval ok">${cnt}</div><div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${fc}"></div></div></div>
-        <div class="prow"><div class="plbl">Abaixo</div><div class="pval bad">${bl}</div><div class="prog-bg"><div class="prog-fill" style="width:${100-pct}%;background:#ff6b6b"></div></div></div>
-        <div class="prow"><div class="plbl">Média atual</div><div class="pval def">${avgs[team]}</div></div>
+        <div class="prow"><div class="plbl">Abaixo</div><div class="pval bad">${bl}</div><div class="prog-bg"><div class="prog-fill" style="width:${active>0?Math.round((bl/active)*100):0}%;background:#ff6b6b"></div></div></div>
+        <div class="prow"><div class="plbl">Fora de operação</div><div class="pval" style="color:var(--muted)">${ab}</div></div>
+        <div class="prow"><div class="plbl">Média do dia</div><div class="pval def">${avgs[team]||'—'}</div></div>
       </div>
     </div>`;
   }).join('');
@@ -601,6 +627,7 @@ function renderPlacar() {
   if (sorted[0]&&sorted[0][1]>0) {
     document.getElementById('winnerBar').style.display='flex';
     document.getElementById('winnerTxt').textContent=`${sorted[0][0]} lidera com ${sorted[0][1]} colaboradores na meta!`;
+
   }
 }
 
@@ -734,9 +761,11 @@ function renderLost() {
   let html='';
   for(const [team,reps] of Object.entries(TEAMS)){
     const cls=team.toLowerCase();
-    const bl=reps.map(r=>({name:r,prod:getLast(r),meta:getMeta(r)})).filter(r=>r.prod!==null&&r.prod<r.meta).sort((a,b)=>a.prod-b.prod);
-    if(!bl.length){html+=`<div class="lost-card" style="border-color:rgba(0,166,80,0.2)"><div class="lh" style="background:rgba(0,166,80,0.08);border-color:rgba(0,166,80,0.15)"><div class="lh-n ${cls}">✅ ${team} — Todos na meta!</div></div></div>`;continue;}
-    html+=`<div class="lost-card"><div class="lh"><div class="lh-n ${cls}">${team}</div><div class="lcnt">${bl.length} abaixo</div></div><div class="lb">${bl.map(r=>`<div class="lr"><div class="ln">${sn(r.name)}</div><div class="lv">${r.prod}</div><div class="lg">–${r.meta-r.prod}</div></div>`).join('')}</div></div>`;
+    const bl=reps.filter(r=>!isAbsent(r)).map(r=>({name:r,prod:getLast(r),meta:getMeta(r)})).filter(r=>r.prod!==null&&r.prod<r.meta).sort((a,b)=>a.prod-b.prod);
+    const ab=reps.filter(r=>isAbsent(r));
+    const abRows=ab.map(r=>`<div class="lr"><div class="ln" style="color:var(--muted)">${r.split(' ').slice(0,2).join(' ')}</div><div style="font-size:10px;color:var(--muted)">Fora de operação</div></div>`).join('');
+    if(!bl.length&&!ab.length){html+=`<div class="lost-card" style="border-color:rgba(0,166,80,0.2)"><div class="lh" style="background:rgba(0,166,80,0.08);border-color:rgba(0,166,80,0.15)"><div class="lh-n ${cls}">✅ ${team} — Todos na meta!</div></div></div>`;continue;}
+    html+=`<div class="lost-card"><div class="lh"><div class="lh-n ${cls}">${team}</div><div class="lcnt">${bl.length} abaixo · ${ab.length} fora</div></div><div class="lb">${bl.map(r=>`<div class="lr"><div class="ln">${r.name.split(' ').slice(0,2).join(' ')}</div><div class="lv">${r.prod}</div><div class="lg">–${r.meta-r.prod}</div></div>`).join('')}${abRows}</div></div>`;
   }
   document.getElementById('lostContent').innerHTML=html;
 }

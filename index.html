@@ -686,22 +686,22 @@ const PRELOADED = [
   {date:'2026-05-12',name:'Paulo Douglas Ribeiro Gomes',prod:144,efetiva:150,util:96.18},
   {date:'2026-05-12',name:'Demetrius Martins Gama',prod:107,efetiva:111,util:96.74},
   {date:'2026-05-12',name:'Geovanna Santos Martins',prod:136,efetiva:183,util:74.27},
-  // 13/05
+  // 13/05 — dados finais
   {date:'2026-05-13',name:'Barbara Cristina Silva Do Nascimento',prod:110,efetiva:140,util:78.95},
-  {date:'2026-05-13',name:'Daiane Luiz Ferreira',prod:130,efetiva:173,util:75.33},
+  {date:'2026-05-13',name:'Daiane Luiz Ferreira',prod:122,efetiva:162,util:75.66},
   {date:'2026-05-13',name:'Amabile Bernardino Dos Santos',prod:143,efetiva:160,util:89.93},
   {date:'2026-05-13',name:'Nayara Machado Da Silva',prod:103,efetiva:139,util:73.77},
-  {date:'2026-05-13',name:'Raquel De Negreiros Aguiar',prod:115,efetiva:140,util:82.49},
-  {date:'2026-05-13',name:'Wallace De Barros Silva',prod:119,efetiva:137,util:87.13},
+  {date:'2026-05-13',name:'Raquel De Negreiros Aguiar',prod:113,efetiva:135,util:83.64},
+  {date:'2026-05-13',name:'Wallace De Barros Silva',prod:131,efetiva:145,util:90.71},
   {date:'2026-05-13',name:'Daiane Da Silva Andrade',prod:154,efetiva:168,util:91.78},
-  {date:'2026-05-13',name:'Myrella Leandra Rodrigues De Sousa',prod:103,efetiva:120,util:86.52},
-  {date:'2026-05-13',name:'Janaina Barbosa Antonio',prod:103,efetiva:113,util:91.32},
+  {date:'2026-05-13',name:'Myrella Leandra Rodrigues De Sousa',prod:104,efetiva:124,util:84.02},
+  {date:'2026-05-13',name:'Janaina Barbosa Antonio',prod:88,efetiva:104,util:84.9},
   {date:'2026-05-13',name:'Josileni Dos Santos Da Silva',prod:150,efetiva:158,util:94.85},
   {date:'2026-05-13',name:'Lais Da Silva Pimentel',prod:169,efetiva:184,util:91.89},
-  {date:'2026-05-13',name:'Estevao Costa Dos Santos',prod:111,efetiva:147,util:75.89},
+  {date:'2026-05-13',name:'Estevao Costa Dos Santos',prod:105,efetiva:147,util:72.02},
   {date:'2026-05-13',name:'Sandra Mara Sanches Gravino Da Silva',prod:124,efetiva:154,util:80.88},
-  {date:'2026-05-13',name:'Pedro Henrique Cassani Ferreira Rivas',prod:99,efetiva:119,util:83.01},
-  {date:'2026-05-13',name:'Demetrius Martins Gama',prod:111,efetiva:131,util:84.48},
+  {date:'2026-05-13',name:'Pedro Henrique Cassani Ferreira Rivas',prod:92,efetiva:113,util:81.89},
+  {date:'2026-05-13',name:'Demetrius Martins Gama',prod:105,efetiva:130,util:80.79},
   {date:'2026-05-13',name:'Geovanna Santos Martins',prod:117,efetiva:155,util:75.9},
 ];
 
@@ -716,7 +716,7 @@ const ABSENT = new Set([
 ]);
 
 // Sempre reinicia com PRELOADED limpo + dados do localStorage que não sejam PRELOADED
-const SK = 'sprint_v5'; // reseta cache — limpa dados com team=null
+const SK = 'sprint_v6'; // reseta cache — limpa dados com team=null
 function load() { try { return JSON.parse(localStorage.getItem(SK))||[]; } catch { return []; } }
 function save(d) { localStorage.setItem(SK, JSON.stringify(d)); }
 
@@ -765,7 +765,14 @@ function renderPlacar() {
     <div class="kpi-card red"><div class="kv">${below}</div><div class="kl">Abaixo</div></div>
     <div class="kpi-card gray"><div class="kv">${absent}</div><div class="kl">Fora Op.</div></div>`;
 
-  const sorted=Object.entries(ach).sort((a,b)=> b[1]-a[1] || avgs[b[0]]-avgs[a[0]]);
+  // % de reps na meta (na meta / ativos) como critério primário, média como desempate
+  const pcts = {};
+  for (const [t,r] of Object.entries(TEAMS)) {
+    const active = r.filter(n=>!isAbsent(n));
+    const ps = active.map(n=>({p:getLast(n),m:getMeta(n)})).filter(x=>x.p!==null);
+    pcts[t] = ps.length ? ps.filter(x=>x.p>=x.m).length / ps.length : 0;
+  }
+  const sorted=Object.entries(ach).sort((a,b)=> (pcts[b[0]]-pcts[a[0]]) || avgs[b[0]]-avgs[a[0]]);
   const medals=['🥇','🥈','🥉','4º'];
   const FCs={Pedro:'#6aaeff',Beatriz:'#3dd68c',Vanessa:'#ffb74d',Ricardo:'#c084fc'};
   document.getElementById('placarGrid').innerHTML=sorted.map(([team,cnt],i)=>{
@@ -1073,10 +1080,11 @@ function renderDevList() {
     const m = getMeta(r.name);
     const color = TC[r.team]??'#8892a4';
     const pcolor = prod>=m?'#3dd68c':prod>=m*.85?'#ffb74d':'#ff6b6b';
+    const needsWork = prod!==null && prod < m;
     const isAct = devActiveRep===r.name;
     return `<div class="dev-rep-row${isAct?' active':''}" onclick="showDevPanel('${r.name.replace(/'/g,"\\'")}')">
       <div class="dev-rep-dot" style="background:${color}"></div>
-      <div class="dev-rep-name">${r.name}</div>
+      <div class="dev-rep-name" style="color:${needsWork?'#ff6b6b':'var(--text)'};font-weight:${needsWork?'700':'600'}">${r.name}</div>
       <div class="dev-rep-prod" style="color:${pcolor}">${prod??'—'}</div>
     </div>`;
   }).join('');

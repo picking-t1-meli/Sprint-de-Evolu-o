@@ -783,21 +783,49 @@ const PRELOADED = [
   {date:'2026-05-16',name:'Sebastiao Aguiar De Souza',prod:89,efetiva:101,util:87.62},
   {date:'2026-05-16',name:'Pedro Henrique Cassani Ferreira Rivas',prod:115,efetiva:136,util:84.83},
   {date:'2026-05-16',name:'Paulo Douglas Ribeiro Gomes',prod:120,efetiva:137,util:88.03},
+  // 16/05
+  {date:'2026-05-16',name:'Alessandra Coutinho De Figueiredo',prod:118,efetiva:152,util:78},
+  {date:'2026-05-16',name:'Amanda Oliveira Nogueira',prod:85,efetiva:124,util:69},
+  {date:'2026-05-16',name:'Ana Beatriz Dos Santos Silva',prod:41,efetiva:86,util:48},
+  {date:'2026-05-16',name:'Ana Lucia Soares Pena Carneiro',prod:81,efetiva:119,util:68},
+  {date:'2026-05-16',name:'Ana Paula Alves Pereira Xavier',prod:35,efetiva:85,util:42},
+  {date:'2026-05-16',name:'Evandro Jose Silva Carvalho',prod:98,efetiva:111,util:88},
+  {date:'2026-05-16',name:'Giovana Eliseu Santos Silva',prod:82,efetiva:118,util:69},
+  {date:'2026-05-16',name:'Pedro Henrique Cassani Ferreira Rivas',prod:91,efetiva:111,util:82},
+  {date:'2026-05-16',name:'Sebastiao Aguiar De Souza',prod:94,efetiva:99,util:95},
+
 ];
 
 // Reps fora de operação na última data (12/05)
 const ABSENT = new Set([
   // 16/05 — fora de operação
+  'Alessandra Domingues Da Costa',
   'Barbara Cristina Silva Do Nascimento',
   'Daiane Luiz Ferreira',
   'Amabile Bernardino Dos Santos',
+  'Nayara Machado Da Silva',
+  'Raquel De Negreiros Aguiar',
   'Sthefany De Araujo Bahiense Eineck Correia',
-  'Evandro Jose Silva Carvalho',
-  'Wallace De Barros Silva'
+  'Jailson Gomes De Oliveira',
+  'Wallace De Barros Silva',
+  'Daiane Da Silva Andrade',
+  'Myrella Leandra Rodrigues De Sousa',
+  'Janaina Barbosa Antonio',
+  'Josileni Dos Santos Da Silva',
+  'Adrielle Rodrigues Serrinha',
+  'Lais Da Silva Pimentel',
+  'Estevao Costa Dos Santos',
+  'Sandra Mara Sanches Gravino Da Silva',
+  'Alexandra Marques De Souza Dias Paschoal',
+  'Emilly Gabriele Monteiro De Lima Rodrigues',
+  'Paulo Douglas Ribeiro Gomes',
+  'Demetrius Martins Gama',
+  'Geovanna Santos Martins',
+  'Andressa Santana Da Silva Costa'
 ]);
 
 // Sempre reinicia com PRELOADED limpo + dados do localStorage que não sejam PRELOADED
-const SK = 'sprint_v9'; // reseta cache — limpa dados com team=null
+const SK = 'sprint_v10'; // reseta cache — limpa dados com team=null
 function load() { try { return JSON.parse(localStorage.getItem(SK))||[]; } catch { return []; } }
 function save(d) { localStorage.setItem(SK, JSON.stringify(d)); }
 
@@ -1111,13 +1139,72 @@ function renderChart() {
 
 function renderLost() {
   let html='';
+  const days=[...new Set(launches.map(l=>l.date))].sort();
+
   for(const [team,reps] of Object.entries(TEAMS)){
     const cls=team.toLowerCase();
-    const bl=reps.filter(r=>!isAbsent(r)).map(r=>({name:r,prod:getLast(r),meta:getMeta(r)})).filter(r=>r.prod!==null&&r.prod<r.meta).sort((a,b)=>a.prod-b.prod);
+    const color=TC[team]??'#8892a4';
+
+    const bl=reps.filter(r=>!isAbsent(r)).map(r=>{
+      const hist=launches.filter(l=>l.name===r&&l.prod>0).sort((a,b)=>a.date.localeCompare(b.date));
+      const last=getLast(r);
+      const meta=getMeta(r);
+      return {name:r,prod:last,meta,hist};
+    }).filter(r=>r.prod!==null&&r.prod<r.meta).sort((a,b)=>a.prod-b.prod);
+
     const ab=reps.filter(r=>isAbsent(r));
-    const abRows=ab.map(r=>`<div class="lr"><div class="ln" style="color:var(--muted)">${r.split(' ').slice(0,2).join(' ')}</div><div style="font-size:10px;color:var(--muted)">Fora de operação</div></div>`).join('');
-    if(!bl.length&&!ab.length){html+=`<div class="lost-card" style="border-color:rgba(0,166,80,0.2)"><div class="lh" style="background:rgba(0,166,80,0.08);border-color:rgba(0,166,80,0.15)"><div class="lh-n ${cls}">✅ ${team} — Todos na meta!</div></div></div>`;continue;}
-    html+=`<div class="lost-card"><div class="lh"><div class="lh-n ${cls}">${team}</div><div class="lcnt">${bl.length} abaixo · ${ab.length} fora</div></div><div class="lb">${bl.map(r=>`<div class="lr"><div class="ln">${r.name.split(' ').slice(0,2).join(' ')}</div><div class="lv">${r.prod}</div><div class="lg">–${r.meta-r.prod}</div></div>`).join('')}${abRows}</div></div>`;
+
+    if(!bl.length&&!ab.length){
+      html+=`<div class="lost-card" style="border-color:rgba(0,166,80,0.2)"><div class="lh" style="background:rgba(0,166,80,0.08);border-color:rgba(0,166,80,0.15)"><div class="lh-n ${cls}">✅ ${team} — Todos na meta!</div></div></div>`;
+      continue;
+    }
+
+    const blRows = bl.map(r=>{
+      const trend = r.hist.length>=2 ? r.hist[r.hist.length-1].prod - r.hist[0].prod : null;
+      const trendColor = trend===null?'var(--muted)':trend>0?'#3dd68c':trend<0?'#ff6b6b':'var(--muted)';
+      const trendStr = trend===null?'—':(trend>0?`↑+${trend}`:`↓${trend}`);
+
+      // Mini sparkline bars
+      const maxV = Math.max(...r.hist.map(h=>h.prod), r.meta);
+      const minV = Math.min(...r.hist.map(h=>h.prod), 60);
+      const range = maxV - minV || 1;
+      const bars = r.hist.map((h,i)=>{
+        const bh = Math.max(Math.round(((h.prod-minV)/range)*20)+2, 2);
+        const bc = h.prod>=r.meta?'#3dd68c':h.prod>=r.meta*.85?'#ffb74d':'#ff6b6b';
+        const isLast = i===r.hist.length-1;
+        return `<div style="width:6px;height:${bh}px;background:${bc};border-radius:2px 2px 0 0;opacity:${isLast?1:0.5}" title="${fd(h.date)}: ${h.prod}"></div>`;
+      }).join('');
+
+      const histStr = r.hist.map(h=>`${fd(h.date)}:${h.prod}`).join(' → ');
+
+      return `<div class="lr" style="flex-direction:column;align-items:flex-start;padding:10px 8px;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px;width:100%">
+          <div class="ln" style="font-weight:700;font-size:12px">${r.name.split(' ').slice(0,3).join(' ')}</div>
+          <div class="lv">${r.prod}</div>
+          <div class="lg">–${r.meta-r.prod}</div>
+          <div style="margin-left:auto;font-size:10px;font-weight:700;color:${trendColor}">${trendStr}</div>
+        </div>
+        ${r.hist.length>0?`
+        <div style="width:100%">
+          <div style="font-size:9px;color:var(--muted);margin-bottom:3px;font-weight:600">${histStr}</div>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:22px">${bars}</div>
+        </div>`:''}
+      </div>`;
+    }).join('');
+
+    const abRows = ab.map(r=>`
+      <div class="lr">
+        <div class="ln" style="color:var(--muted)">${r.split(' ').slice(0,3).join(' ')}</div>
+        <div style="font-size:10px;color:var(--muted)">Fora de operação</div>
+      </div>`).join('');
+
+    html+=`<div class="lost-card">
+      <div class="lh">
+        <div class="lh-n ${cls}">${team}</div>
+        <div class="lcnt">${bl.length} abaixo · ${ab.length} fora</div>
+      </div>
+      <div class="lb">${blRows}${abRows}</div>
+    </div>`;
   }
   document.getElementById('lostContent').innerHTML=html;
 }

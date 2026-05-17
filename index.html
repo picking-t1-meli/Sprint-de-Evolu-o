@@ -794,38 +794,49 @@ const PRELOADED = [
   {date:'2026-05-16',name:'Pedro Henrique Cassani Ferreira Rivas',prod:91,efetiva:111,util:82},
   {date:'2026-05-16',name:'Sebastiao Aguiar De Souza',prod:94,efetiva:99,util:95},
 
+  // 17/05
+  {date:'2026-05-17',name:'Alessandra Domingues Da Costa',prod:138,efetiva:179,util:77.44},
+  {date:'2026-05-17',name:'Daiane Luiz Ferreira',prod:115,efetiva:143,util:80.18},
+  {date:'2026-05-17',name:'Amabile Bernardino Dos Santos',prod:100,efetiva:131,util:76.25},
+  {date:'2026-05-17',name:'Amanda Oliveira Nogueira',prod:120,efetiva:169,util:71.09},
+  {date:'2026-05-17',name:'Wallace De Barros Silva',prod:115,efetiva:130,util:88.62},
+  {date:'2026-05-17',name:'Jailson Gomes De Oliveira',prod:123,efetiva:136,util:90.74},
+  {date:'2026-05-17',name:'Giovana Eliseu Santos Silva',prod:98,efetiva:143,util:68.93},
+  {date:'2026-05-17',name:'Josileni Dos Santos Da Silva',prod:116,efetiva:134,util:86.1},
+  {date:'2026-05-17',name:'Adrielle Rodrigues Serrinha',prod:124,efetiva:146,util:85.34},
+  {date:'2026-05-17',name:'Lais Da Silva Pimentel',prod:133,efetiva:162,util:82.19},
+  {date:'2026-05-17',name:'Estevao Costa Dos Santos',prod:119,efetiva:137,util:86.74},
+  {date:'2026-05-17',name:'Sandra Mara Sanches Gravino Da Silva',prod:114,efetiva:142,util:80.05},
+  {date:'2026-05-17',name:'Ana Lucia Soares Pena Carneiro',prod:106,efetiva:141,util:75.31},
+  {date:'2026-05-17',name:'Alexandra Marques De Souza Dias Paschoal',prod:94,efetiva:159,util:59.28},
+  {date:'2026-05-17',name:'Sebastiao Aguiar De Souza',prod:78,efetiva:88,util:88.54},
+  {date:'2026-05-17',name:'Emilly Gabriele Monteiro De Lima Rodrigues',prod:94,efetiva:128,util:73.61},
+  {date:'2026-05-17',name:'Demetrius Martins Gama',prod:108,efetiva:135,util:79.73},
+  {date:'2026-05-17',name:'Ana Beatriz Dos Santos Silva',prod:90,efetiva:138,util:64.95},
+  {date:'2026-05-17',name:'Andressa Santana Da Silva Costa',prod:124,efetiva:153,util:81.26},
+
 ];
 
 // Reps fora de operação na última data (12/05)
 const ABSENT = new Set([
-  // 16/05 — fora de operação
-  'Alessandra Domingues Da Costa',
+  // 17/05 — fora de operação
   'Barbara Cristina Silva Do Nascimento',
-  'Daiane Luiz Ferreira',
-  'Amabile Bernardino Dos Santos',
   'Nayara Machado Da Silva',
   'Raquel De Negreiros Aguiar',
   'Sthefany De Araujo Bahiense Eineck Correia',
-  'Jailson Gomes De Oliveira',
-  'Wallace De Barros Silva',
+  'Ana Paula Alves Pereira Xavier',
+  'Evandro Jose Silva Carvalho',
   'Daiane Da Silva Andrade',
   'Myrella Leandra Rodrigues De Sousa',
   'Janaina Barbosa Antonio',
-  'Josileni Dos Santos Da Silva',
-  'Adrielle Rodrigues Serrinha',
-  'Lais Da Silva Pimentel',
-  'Estevao Costa Dos Santos',
-  'Sandra Mara Sanches Gravino Da Silva',
-  'Alexandra Marques De Souza Dias Paschoal',
-  'Emilly Gabriele Monteiro De Lima Rodrigues',
+  'Pedro Henrique Cassani Ferreira Rivas',
+  'Alessandra Coutinho De Figueiredo',
   'Paulo Douglas Ribeiro Gomes',
-  'Demetrius Martins Gama',
-  'Geovanna Santos Martins',
-  'Andressa Santana Da Silva Costa'
+  'Geovanna Santos Martins'
 ]);
 
 // Sempre reinicia com PRELOADED limpo + dados do localStorage que não sejam PRELOADED
-const SK = 'sprint_v10'; // reseta cache — limpa dados com team=null
+const SK = 'sprint_v11'; // reseta cache — limpa dados com team=null
 function load() { try { return JSON.parse(localStorage.getItem(SK))||[]; } catch { return []; } }
 function save(d) { localStorage.setItem(SK, JSON.stringify(d)); }
 
